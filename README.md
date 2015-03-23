@@ -3,9 +3,7 @@
 In-memory http.FileSystem from tar archives.
 
 ### Why?
-If you want to server files in your Go program over http and don't like to embed them with your binary and stil want an easier way to deploy them along with your binary and serve them from memory for faster response time, this package is your friend.
-
-It is also helpful for working with user uploaded tar.
+If you have multiple assets for your program that you don't want to embed them in your binary but still want an easier way to ship them along your binary, tarfs is your friend.
 
 ### Usage
 See the [GoDoc](https://godoc.org/github.com/omeid/go-tarfs)
