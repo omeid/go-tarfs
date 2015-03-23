@@ -3,7 +3,7 @@
 In-memory http.FileSystem from tar archives.
 
 ### Why?
-If you have multiple assets for your program that you don't want to embed them in your binary but still want an easier way to ship them along your binary, tarfs is your friend.
+If you have multiple assets for your program that you don't want to [embed](https://github.com/omeid/go-resources) them in your binary but still want an easier way to ship them along your binary, tarfs is your friend.
 
 ### Usage
 See the [GoDoc](https://godoc.org/github.com/omeid/go-tarfs)
@@ -20,3 +20,8 @@ See [Contributors](https://github.com/omeid/go-tarfs/graphs/contributors).
 
 ### TODO
   - Add more tests
+
+### SEE ALSO
+  - [github.com/omeid/go-resources](http://godoc.org/github.com/omeid/go-resources)
+  - [x/tools/godoc/vfs/zipfs](http://godoc.org/golang.org/x/tools/godoc/vfs/zipfs)
+  - [github.com/tsuru/tusru/fs](http://godoc.org/github.com/tsuru/tsuru/fs)
