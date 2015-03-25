@@ -1,4 +1,4 @@
-[![GoDoc](https://godoc.org/github.com/omeid/go-tarfs?status.svg)](https://godoc.org/github.com/omeid/go-tarfs)
+[![GoDoc](https://godoc.org/github.com/omeid/go-tarfs?status.svg)](https://godoc.org/github.com/omeid/go-tarfs) [![Build Status](https://drone.io/github.com/omeid/go-tarfs/status.png)](https://drone.io/github.com/omeid/go-tarfs/latest)
 # tarfs
 In-memory http.FileSystem from tar archives.
 
