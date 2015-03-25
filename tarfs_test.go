@@ -56,5 +56,15 @@ func TestOpen(t *testing.T) {
 		if string(content) != file.Body {
 			t.Fatalf("For '%s'\nExpected:\n%s\nGot:\n%s\n", file.Name, file.Body, content)
 		}
+
+		var (
+			s, _ = f.Stat()
+			size = int64(len(file.Body))
+			got  = s.Size()
+		)
+
+		if size != got {
+			t.Fatalf("For '%s'\nExpected Size:\n%v\nGot:\n%v\n", file.Name, size, got)
+		}
 	}
 }
