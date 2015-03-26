@@ -1,4 +1,4 @@
-// In memory http.FileSystem from tars archives
+// In memory http.FileSystem from tar archives
 package tarfs
 
 import (
