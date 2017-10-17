@@ -9,10 +9,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 )
-
 
 // New returns an http.FileSystem that holds all the files in the tar,
 // It reads the whole archive from the Reader. It is the caller's responsibility to call Close on the Reader when done.
@@ -35,7 +35,10 @@ func New(tarstream io.Reader) (http.FileSystem, error) {
 			return nil, err
 		}
 
-		tarfs.files[hdr.Name] = file{data: data, fi: hdr.FileInfo()}
+		tarfs.files[path.Join("/", hdr.Name)] = file{
+			data: data,
+			fi:   hdr.FileInfo(),
+		}
 	}
 	return &tarfs, nil
 }
@@ -57,7 +60,7 @@ func (tf *tarfs) Open(name string) (http.File, error) {
 		strings.Contains(name, "\x00") {
 		return nil, errors.New("http: invalid character in file path")
 	}
-	f, ok := tf.files[name]
+	f, ok := tf.files[path.Join("/", name)]
 	if !ok {
 		return nil, os.ErrNotExist
 	}
