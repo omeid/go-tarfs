@@ -18,11 +18,43 @@ func TestOpen(t *testing.T) {
 
 	// Add some files to the archive.
 	var files = []struct {
-		Name, Body string
+		Name        string
+		Body        string
+		AccessNames []string
 	}{
-		{"readme.txt", "This archive contains some text files."},
-		{"gopher.txt", "Gopher names:\nGeorge\nGeoffrey\nGonzo"},
-		{"todo.txt", "Get animal handling licence."},
+		{
+			Name: "readme.txt",
+			Body: "This archive contains some text files.",
+			AccessNames: []string{
+				"readme.txt",
+				"/readme.txt",
+				"./readme.txt",
+				"././readme.txt",
+				"../readme.txt",
+			},
+		},
+		{
+			Name: "/gopher.txt",
+			Body: "Gopher names:\nGeorge\nGeoffrey\nGonzo",
+			AccessNames: []string{
+				"gopher.txt",
+				"/gopher.txt",
+				"./gopher.txt",
+				"././gopher.txt",
+				"../gopher.txt",
+			},
+		},
+		{
+			Name: "./todo.txt",
+			Body: "Get animal handling licence.",
+			AccessNames: []string{
+				"todo.txt",
+				"/todo.txt",
+				"./todo.txt",
+				"././todo.txt",
+				"../todo.txt",
+			},
+		},
 	}
 	for _, file := range files {
 		hdr := &tar.Header{
@@ -48,23 +80,25 @@ func TestOpen(t *testing.T) {
 	}
 
 	for _, file := range files {
-		f, err := fs.Open(file.Name)
-		if err != nil {
-			t.Fatal(err)
-		}
-		content, _ := ioutil.ReadAll(f)
-		if string(content) != file.Body {
-			t.Fatalf("For '%s'\nExpected:\n%s\nGot:\n%s\n", file.Name, file.Body, content)
-		}
+		for _, path := range file.AccessNames {
+			f, err := fs.Open(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			content, _ := ioutil.ReadAll(f)
+			if string(content) != file.Body {
+				t.Fatalf("For '%s'\nExpected:\n%s\nGot:\n%s\n", file.Name, file.Body, content)
+			}
 
-		var (
-			s, _ = f.Stat()
-			size = int64(len(file.Body))
-			got  = s.Size()
-		)
+			var (
+				s, _ = f.Stat()
+				size = int64(len(file.Body))
+				got  = s.Size()
+			)
 
-		if size != got {
-			t.Fatalf("For '%s'\nExpected Size:\n%v\nGot:\n%v\n", file.Name, size, got)
+			if size != got {
+				t.Fatalf("For '%s'\nExpected Size:\n%v\nGot:\n%v\n", file.Name, size, got)
+			}
 		}
 	}
 }
